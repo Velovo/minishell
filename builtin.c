@@ -46,7 +46,16 @@ void end(char **tab)
 	exit(0);
 }
 
-int cd(char *line)
+int cd(char **tab)
 {
+	int i;
+	
+	i = chdir(tab[0]);
+	if (i == -1)
+	{
+		write(1, "mash: cd: ", 10);
+		write(1, tab[0], ft_strlen(tab[0]));
+		write(1, ": No such file or directory\n", 28);
+	}
 	return (1);
 }

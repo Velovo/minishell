@@ -22,8 +22,10 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <signal.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-int cd(char *line);
+int cd(char **tab);
 int pwd();
 int echo(char **tab);
 void end(char **tab);
@@ -31,5 +33,7 @@ void	*free_arr(char **tab, int j);
 char	**ft_enhanced_split(char const *str);
 void sighandler(int signum);
 void print_new_line();
+int exec_prog(char *line, char **argv, char **envp);
+int search_and_exec(char **tab);
 
 #endif

@@ -15,19 +15,38 @@
 void print_new_line()
 {
 	char c[] = "&> ";
+	char *str;
+	int i;
+	int j;
 
 	write(1, c, 3);
-}
-
-int exec_prog(char *line, char **argv, char **envp)
-{
-	pid_t pid;
-
-    pid = fork();
-    if (pid == 0)
-        execve(line, argv, envp);
-    else
-        wait(&pid);
+	str = getcwd(NULL, 0);
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '/')
+			++j;
+		++i;
+	}
+	if (j > 1)
+	{
+		while (str[i] != '/' && i >= 0)
+			--i;
+		++i;
+		ft_putstr_fd("\033[1;36m", 1);
+		write(1, &str[i], ft_strlen(&str[i]));
+		ft_putstr_fd("\033[0m", 1);
+		write(1, ": ", 2);
+	}
+	else
+	{
+		ft_putstr_fd("\033[1;31m", 1);
+		write(1, str, ft_strlen(str));
+		ft_putstr_fd("\033[0m", 1);
+		write(1, ": ", 2);
+	}
+	free(str);
 }
 
 int is_broken_quote(char *line)
@@ -67,7 +86,7 @@ int is_broken_quote(char *line)
 	return (0); // a changer
 }
 
-int isbuiltin(char *line)
+int parse_exec(char *line)
 {
 	char **tab;
 	int i;
@@ -78,27 +97,25 @@ int isbuiltin(char *line)
 		printf("broken pipe\n");
 		return (i);
 	}
-
 	tab = ft_enhanced_split(line);
-	if (ft_strncmp(tab[0], "echo", 4) == 0 || ft_strncmp(tab[0], "cd", 2) == 0 || ft_strncmp(tab[0], "pwd", 3) == 0
-	|| ft_strncmp(tab[0], "export", 6) == 0 || ft_strncmp(tab[0], "unset", 5) == 0 || ft_strncmp(tab[0], "env", 3) == 0
-	|| ft_strncmp(tab[0], "exit", 2) == 0)
+	if (ft_strncmp(tab[0], "echo", 5) == 0 || ft_strncmp(tab[0], "cd", 3) == 0 || ft_strncmp(tab[0], "pwd", 4) == 0
+	|| ft_strncmp(tab[0], "export", 7) == 0 || ft_strncmp(tab[0], "unset", 6) == 0 || ft_strncmp(tab[0], "env", 4) == 0
+	|| ft_strncmp(tab[0], "exit", 5) == 0 || ft_strncmp(tab[0], "cd", 3) == 0)
 	{
 		if (ft_strncmp("echo", tab[0], 5) == 0)
 			echo(&tab[1]);
-		else if (ft_strncmp("pwd", tab[0], 3) == 0)
+		else if (ft_strncmp("pwd", tab[0], 4) == 0)
 			pwd();
-		else if (ft_strncmp("exit", tab[0], 4) == 0)
+		else if (ft_strncmp("exit", tab[0], 5) == 0)
 			end(tab);
-		free_arr(tab, i);
+		else if (ft_strncmp("cd", tab[0], 3) == 0)
+			cd(&tab[1]);
 	}
 	else
 	{
-		if (ft_strncmp("./", tab[0], 2) == 0)
-		{
-			exec_prog(tab[0], &tab[1], NULL);
-		}
+		search_and_exec(tab);
 	}
+	free_arr(tab, i);
 	return (i);
 }
 
@@ -108,19 +125,16 @@ int main(int argc, char **argv, char **envp)
     char *line;
 	char *path;
 
-    print_new_line();
 	signal(SIGINT, sighandler);
+    print_new_line();
 	while (1)
     {
         i = get_next_line(0, &line);
-
-		if (isbuiltin(line) == 1)
+		if (i >= 0 && line[0] == 0) //pour pas segfault plus loin !!!!!!NE GERE PAS LE CTRLD
 			;
-		else
-			;//exec_prog(line, NULL, envp);
-        if (i == 0)
-        	return (0);
+		else if (parse_exec(line) == 1)
+			;
 		print_new_line();
-    }
+	}
     return (0);
 }
