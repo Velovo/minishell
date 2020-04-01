@@ -47,7 +47,7 @@ static int	count_split(const char *str)
 			++ret;
 			++i;
 			while (str[i] != '\'' && str[i] != '\0')
-			{	
+			{
 				if (str[i] == '\\' && str[i + 1] != '\'')
 					++i;
 				++i;

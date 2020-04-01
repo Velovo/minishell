@@ -6,7 +6,7 @@
 /*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 15:09:19 by delacourt         #+#    #+#             */
-/*   Updated: 2020/03/13 17:26:18 by delacourt        ###   ########.fr       */
+/*   Updated: 2020/04/01 10:12:29 by delacourt        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int exec_prog(char *line, char **argv, char **envp)
         execve(line, argv, envp);
     else
         wait(&pid);
+    return (0);
 }
 
 int is_broken_quote(char *line)
@@ -52,7 +53,7 @@ int is_broken_quote(char *line)
 			++i;
 			while (line[i] != '\'' && line[i] != '\0')
 			{
-				
+
 				if (line[i] == '\\' && line[i + 1] != '\'')
 					++i;
 				++i;
@@ -105,22 +106,29 @@ int isbuiltin(char *line)
 int main(int argc, char **argv, char **envp)
 {
 	int i;
+    int sc;
     char *line;
 	char *path;
+    char **tab;
 
     print_new_line();
 	signal(SIGINT, sighandler);
 	while (1)
     {
         i = get_next_line(0, &line);
+        tab = split_semi_colon(line);
+        while (*tab)
+        {
+            if (isbuiltin(*tab) == 1)
+                ;
+            else
+                ;//exec_prog(line, NULL, envp);
+            if (i == 0)
+                return (0);
+            tab++;
+        }
+        print_new_line();
 
-		if (isbuiltin(line) == 1)
-			;
-		else
-			;//exec_prog(line, NULL, envp);
-        if (i == 0)
-        	return (0);
-		print_new_line();
     }
     return (0);
 }
