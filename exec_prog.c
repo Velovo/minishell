@@ -11,7 +11,7 @@ int exec_prog(char *line, char **argv, char **envp)
         wait(&pid);
 }
 
-int search_and_exec(char **tab)
+int search_and_exec(char **tab, char **envp)
 {
 	struct stat statbuff;
 	char path[] = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/e/Logiciels/sshputty/:/mnt/c/Program Files/Git/cmd:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/e/Logiciels/Node.js/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/e/Logiciels/sshputty/:/mnt/c/Program Files/Git/cmd:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/e/Logiciels/Node.js/:/mnt/c/Program Files/dotnet/:/mnt/c/MinGW/bin:/mnt/c/Users/Velovo/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Velovo/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Velovo/AppData/Roaming/npm:/mnt/c/MinGW/bin:/mnt/c/Users/Velovo/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Velovo/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Velovo/AppData/Roaming/npm:/mnt/c/Users/Velovo/.dotnet/tools";
@@ -28,7 +28,7 @@ int search_and_exec(char **tab)
 			if (S_ISDIR(statbuff.st_mode) == 1) //check si cest un directory
 				cd(tab);
 			else if (S_ISDIR(statbuff.st_mode) == 0) //ou un file
-				exec_prog(tab[0], tab, NULL);
+				exec_prog(tab[0], tab, envp);
 		}
 		else
 		{
@@ -69,7 +69,7 @@ int search_and_exec(char **tab)
 
 			if (stat(try, &statbuff) == 0) //check si ce dernier existe
 			{
-				exec_prog(try, tab, NULL); //virer le null et remplacer par lenv
+				exec_prog(try, tab, envp); //virer le null et remplacer par lenv
 				free(try);
 				return (0);
 			}

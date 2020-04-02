@@ -34,6 +34,7 @@ char	**ft_enhanced_split(char const *str);
 void sighandler(int signum);
 void print_new_line();
 int exec_prog(char *line, char **argv, char **envp);
-int search_and_exec(char **tab);
+int search_and_exec(char **tab, char **envp);
+char **split_semi_colon(char *line);
 
 #endif

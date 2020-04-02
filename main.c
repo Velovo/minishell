@@ -86,7 +86,7 @@ int is_broken_quote(char *line)
 	return (0); // a changer
 }
 
-int parse_exec(char *line)
+int parse_exec(char *line, char **envp)
 {
 	char **tab;
 	int i;
@@ -113,7 +113,7 @@ int parse_exec(char *line)
 	}
 	else
 	{
-		search_and_exec(tab);
+		search_and_exec(tab, envp);
 	}
 	free_arr(tab, i);
 	return (i);
@@ -123,17 +123,25 @@ int main(int argc, char **argv, char **envp)
 {
 	int i;
     char *line;
-	char *path;
+	int sc;
+	char **tab;
 
 	signal(SIGINT, sighandler);
     print_new_line();
 	while (1)
     {
         i = get_next_line(0, &line);
-		if (i >= 0 && line[0] == 0) //pour pas segfault plus loin !!!!!!NE GERE PAS LE CTRLD
-			;
-		else if (parse_exec(line) == 1)
-			;
+		tab = split_semi_colon(line);
+		while (*tab)
+		{
+			if (i == 1 && line[0] == 0) //pour pas segfault plus loin !!!!!!NE GERE PAS LE CTRLD
+				;
+			else if (i == 0)
+				exit (0);
+			else if (parse_exec(*tab, envp) == 1)
+				;
+			++tab;
+		}
 		print_new_line();
 	}
     return (0);
