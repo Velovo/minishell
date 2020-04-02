@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../head/minishell.h"
 
 static void	ft_save(char *s, char *save)
 {

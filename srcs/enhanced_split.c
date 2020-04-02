@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../head/minishell.h"
 
 void	*free_arr(char **tab, int j)
 {
@@ -201,7 +201,6 @@ char		**ft_enhanced_split(char const *str)
 	char	**tab;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	// printf("str init = %s\n", str);
@@ -213,7 +212,6 @@ char		**ft_enhanced_split(char const *str)
 	while (j < count_split(str))
 	{
 		// printf("count = %d\n", count_words(&str[i]));
-		k = 0;
 	 	tab[j] = fill_word(&str[i]);
 		j++;
 		i = i + advance(&str[i]);

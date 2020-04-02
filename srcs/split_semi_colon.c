@@ -9,7 +9,7 @@
 /*   Updated: 2020/04/01 09:55:31 by delacourt        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+#include "../head/minishell.h"
 
 int count_semi_colon(char *line)
 {

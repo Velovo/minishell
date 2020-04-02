@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../head/minishell.h"
 
 int exec_prog(char *line, char **argv, char **envp)
 {
@@ -8,7 +8,10 @@ int exec_prog(char *line, char **argv, char **envp)
     if (pid == 0)
         execve(line, argv, envp);
     else
+	{
         wait(&pid);
+	}
+	return (pid);
 }
 
 int search_and_exec(char **tab, char **envp)
@@ -83,5 +86,6 @@ int search_and_exec(char **tab, char **envp)
 			}
 			free(try);
 		}
-	}	
+	}
+	return (1);	
 }

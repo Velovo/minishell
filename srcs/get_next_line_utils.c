@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../head/minishell.h"
 
 char	*ft_strnew(size_t size)
 {

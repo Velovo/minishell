@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../head/minishell.h"
 
 int echo(char **tab)
 {

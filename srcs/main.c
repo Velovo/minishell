@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../head/minishell.h"
 
 void print_new_line()
 {
@@ -123,9 +123,10 @@ int main(int argc, char **argv, char **envp)
 {
 	int i;
     char *line;
-	int sc;
 	char **tab;
 
+	(void)argc;
+	(void)argv;
 	signal(SIGINT, sighandler);
     print_new_line();
 	while (1)
@@ -135,11 +136,15 @@ int main(int argc, char **argv, char **envp)
 		while (*tab)
 		{
 			if (i == 1 && line[0] == 0) //pour pas segfault plus loin !!!!!!NE GERE PAS LE CTRLD
+			{
 				;
+			}
 			else if (i == 0)
 				exit (0);
 			else if (parse_exec(*tab, envp) == 1)
+			{
 				;
+			}
 			++tab;
 		}
 		print_new_line();
