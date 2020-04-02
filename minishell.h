@@ -6,7 +6,7 @@
 /*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 15:14:41 by delacourt         #+#    #+#             */
-/*   Updated: 2020/04/01 09:38:17 by delacourt        ###   ########.fr       */
+/*   Updated: 2020/04/02 09:46:54 by delacourt        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <signal.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-    int cd(char *line);
+int cd(char **tab);
 int pwd();
 int echo(char **tab);
 void end(char **tab);
@@ -32,5 +34,6 @@ char	**ft_enhanced_split(char const *str);
 void sighandler(int signum);
 void print_new_line();
 char	**split_semi_colon(char *line);
-
+int exec_prog(char *line, char **argv, char **envp);
+int search_and_exec(char **tab);
 #endif
