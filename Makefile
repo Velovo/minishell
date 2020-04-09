@@ -18,6 +18,7 @@ SRC				=	builtin.c\
 					main.c\
 					sign_handle.c\
 					split_semi_colon.c\
+					handle_env.c\
 					get_next_line.c\
 					get_next_line_utils.c\
 
@@ -29,7 +30,7 @@ ROAD_O			= $(OBJ)
 
 OBJ				= $(ROAD_S:.s=.o)
 
-CC				= gcc
+CC				= clang
 
 FLAGS			= -Werror -Wall -Wextra
 

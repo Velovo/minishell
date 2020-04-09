@@ -36,5 +36,7 @@ void print_new_line();
 int exec_prog(char *line, char **argv, char **envp);
 int search_and_exec(char **tab, char **envp);
 char **split_semi_colon(char *line);
+char **new_env(char **envp);
+int env_len(char **env);
 
 #endif

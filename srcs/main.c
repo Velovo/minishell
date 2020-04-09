@@ -124,9 +124,11 @@ int main(int argc, char **argv, char **envp)
 	int i;
     char *line;
 	char **tab;
+	char **tenv;
 
 	(void)argc;
 	(void)argv;
+	tenv = new_env(envp);
 	signal(SIGINT, sighandler);
     print_new_line();
 	while (1)
