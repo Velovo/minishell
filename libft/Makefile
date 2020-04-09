@@ -73,7 +73,7 @@ OBJ				= $(SRC:.c=.o)
 
 OBJ2			= $(SRCB:.c=.o)
 
-CC				= gcc
+CC				= clang
 
 HEADER_DIR		= libft.h
 

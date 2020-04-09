@@ -12,44 +12,47 @@
 
 NAME			= minishell
 
-SRC				=	builtin.c\
-					enhanced_split.c\
-					exec_prog.c\
-					main.c\
-					sign_handle.c\
-					split_semi_colon.c\
-					handle_env.c\
-					get_next_line.c\
-					get_next_line_utils.c\
+SRC				=	./srcs/builtin.c\
+					./srcs/enhanced_split.c\
+					./srcs/exec_prog.c\
+					./srcs/main.c\
+					./srcs/sign_handle.c\
+					./srcs/split_semi_colon.c\
+					./srcs/handle_env.c\
+					./srcs/get_next_line.c\
+					./srcs/get_next_line_utils.c\
 
-SRCD			= ./srcs/
-
-ROAD_S			= $(addprefix $(SRCD), $(SRC))
+ROAD_S			= $(SRC)
 
 ROAD_O			= $(OBJ)
 
-OBJ				= $(ROAD_S:.s=.o)
+ROAD_B			= $(SRCB)
+
+FLAGS			= -Wall -Wextra -Werror
+
+OBJ				= $(SRC:.c=.o)
 
 CC				= clang
 
-FLAGS			= -Werror -Wall -Wextra
-
 HEADER_DIR		= -I./head/get_next_line.h -I./head/minishell.h 
 
-$(NAME) :
+$(NAME) :		$(OBJ)
 				cd libft && make
-				$(CC) $(FLAGS) $(OBJ) libft/libft.a
-				mv a.out minishell
+				$(CC) $(FLAGS) $(OBJ) libft/libft.a -o $(NAME)
 
+LIBFT			= libft
 
 all :			$(NAME)
 
 clean :
+				cd libft && make clean
 				rm -f $(ROAD_O)
 
-fclean : clean
+fclean :
+				cd libft && make fclean
+				rm -f $(ROAD_O)
 				rm -f $(NAME)
 
-re : fclean all
+re : 			fclean all
 
-.PHONY: all clean fclean re
+.PHONY: 		all clean fclean re
