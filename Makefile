@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avan-pra <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/09 16:02:37 by avan-pra          #+#    #+#              #
-#    Updated: 2019/10/10 13:39:50 by avan-pra         ###   ########.fr        #
+#    Updated: 2020/04/09 16:49:36 by delacourt        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC				=	./srcs/builtin.c\
 					./srcs/handle_env.c\
 					./srcs/get_next_line.c\
 					./srcs/get_next_line_utils.c\
+					./srcs/split_r_output.c\
 
 ROAD_S			= $(SRC)
 
@@ -34,7 +35,7 @@ OBJ				= $(SRC:.c=.o)
 
 CC				= clang
 
-HEADER_DIR		= -I./head/get_next_line.h -I./head/minishell.h 
+HEADER_DIR		= -I./head/get_next_line.h -I./head/minishell.h
 
 $(NAME) :		$(OBJ)
 				cd libft && make

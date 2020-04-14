@@ -6,7 +6,7 @@
 /*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/13 15:09:19 by delacourt         #+#    #+#             */
-/*   Updated: 2020/03/13 17:26:18 by delacourt        ###   ########.fr       */
+/*   Updated: 2020/04/14 13:31:15 by delacourt        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int is_broken_quote(char *line)
 			++i;
 			while (line[i] != '\'' && line[i] != '\0')
 			{
-				
+
 				if (line[i] == '\\' && line[i + 1] != '\'')
 					++i;
 				++i;
@@ -86,7 +86,7 @@ int is_broken_quote(char *line)
 	return (0); // a changer
 }
 
-int parse_exec(char *line, char **envp)
+int parse_exec(char *line, int fd, char **envp)
 {
 	char **tab;
 	int i;
@@ -103,9 +103,9 @@ int parse_exec(char *line, char **envp)
 	|| ft_strncmp(tab[0], "exit", 5) == 0 || ft_strncmp(tab[0], "cd", 3) == 0)
 	{
 		if (ft_strncmp("echo", tab[0], 5) == 0)
-			echo(&tab[1]);
+			echo(&tab[1], fd);
 		else if (ft_strncmp("pwd", tab[0], 4) == 0)
-			pwd();
+			pwd(fd);
 		else if (ft_strncmp("exit", tab[0], 5) == 0)
 			end(tab);
 		else if (ft_strncmp("cd", tab[0], 3) == 0)
@@ -125,6 +125,9 @@ int main(int argc, char **argv, char **envp)
     char *line;
 	char **tab;
 	char **tenv;
+    t_r_output out;
+
+    int fd;
 
 	(void)argc;
 	(void)argv;
@@ -137,16 +140,16 @@ int main(int argc, char **argv, char **envp)
 		tab = split_semi_colon(line);
 		while (*tab)
 		{
+            split_r_output(*tab, &out);
 			if (i == 1 && line[0] == 0) //pour pas segfault plus loin !!!!!!NE GERE PAS LE CTRLD
-			{
 				;
-			}
 			else if (i == 0)
 				exit (0);
-			else if (parse_exec(*tab, envp) == 1)
+			else if (parse_exec(out.ret, out.fd, envp) == 1)
 			{
 				;
 			}
+            close_output(&out);
 			++tab;
 		}
 		print_new_line();

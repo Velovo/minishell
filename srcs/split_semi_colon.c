@@ -6,9 +6,10 @@
 /*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 11:05:15 by delacourt         #+#    #+#             */
-/*   Updated: 2020/04/01 09:55:31 by delacourt        ###   ########.fr       */
+/*   Updated: 2020/04/09 16:38:02 by delacourt        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../head/minishell.h"
 
 int count_semi_colon(char *line)
@@ -35,55 +36,50 @@ int count_semi_colon(char *line)
 
 char **split_semi_colon(char *line)
 {
-    int i;
-    int j;
-    int k;
-    int l;
-    int m;
-    int q;
-    char **tab;
-    q = 0;
-    i = 0;
-    j = 0;
-    k = 0;
-    l = 0;
-    m = 0;
-    tab = malloc(sizeof(char *) * (count_semi_colon(line) + 2));
-    while (line[i])
+    t_semi_colons iter;
+
+    iter.q = 0;
+    iter.i = 0;
+    iter.j = 0;
+    iter.k = 0;
+    iter.l = 0;
+    iter.m = 0;
+    iter.tab = malloc(sizeof(char *) * (count_semi_colon(line) + 2));
+    while (line[iter.i])
     {
-        if (line[i] == '\"' && q == 0)
-            q++;
-        else if (line[i] == '\"' && q == 1)
-            q--;
-        else if (line[i + 1] == ';' && line[i] != '\\' && q == 0)
+        if (line[iter.i] == '\"' && iter.q == 0)
+            iter.q++;
+        else if (line[iter.i] == '\"' && iter.q == 1)
+            iter.q--;
+        else if (line[iter.i + 1] == ';' && line[iter.i] != '\\' && iter.q == 0)
         {
-            tab[k] = malloc(sizeof(char) * j + 2);
-            while (l <= i)
+            iter.tab[iter.k] = malloc(sizeof(char) * iter.j + 2);
+            while (iter.l <= iter.i)
             {
-                tab[k][m] = line[l];
-                l++;
-                m++;
+                iter.tab[iter.k][iter.m] = line[iter.l];
+                iter.l++;
+                iter.m++;
             }
-            tab[k][m] = '\0';
-            m = 0;
-            j = -1;
-            k++;
-            l++;
-            i++;
+            iter.tab[iter.k][iter.m] = '\0';
+            iter.m = 0;
+            iter.j = -1;
+            iter.k++;
+            iter.l++;
+            iter.i++;
         }
-        j++;
-        i++;
+        iter.j++;
+        iter.i++;
     }
-    j--;
-    tab[k] = malloc(sizeof(char) * j + 2);
-    while (l < i)
+    iter.j--;
+    iter.tab[iter.k] = malloc(sizeof(char) * iter.j + 2);
+    while (iter.l < iter.i)
     {
-        tab[k][m] = line[l];
-        l++;
-        m++;
+        iter.tab[iter.k][iter.m] = line[iter.l];
+        iter.l++;
+        iter.m++;
     }
-    tab[k][m] = '\0';
-    k++;
-    tab[k] = NULL;
-    return (tab);
+    iter.tab[iter.k][iter.m] = '\0';
+    iter.k++;
+    iter.tab[iter.k] = NULL;
+    return (iter.tab);
 }

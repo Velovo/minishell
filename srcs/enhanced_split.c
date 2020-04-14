@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enhanced_split.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 16:08:40 by delacourt         #+#    #+#             */
+/*   Updated: 2020/04/09 16:08:40 by delacourt        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../head/minishell.h"
 
 void	*free_arr(char **tab, int j)
@@ -47,7 +59,7 @@ static int	count_split(const char *str)
 			++ret;
 			++i;
 			while (str[i] != '\'' && str[i] != '\0')
-			{	
+			{
 				if (str[i] == '\\' && str[i + 1] != '\'')
 					++i;
 				++i;

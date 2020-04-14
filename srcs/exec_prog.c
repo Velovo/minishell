@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_prog.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: delacourt <delacourt@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 15:58:25 by delacourt         #+#    #+#             */
+/*   Updated: 2020/04/09 15:58:25 by delacourt        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../head/minishell.h"
 
 int exec_prog(char *line, char **argv, char **envp)
@@ -87,5 +99,5 @@ int search_and_exec(char **tab, char **envp)
 			free(try);
 		}
 	}
-	return (1);	
+	return (1);
 }
